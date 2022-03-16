@@ -34,9 +34,10 @@ public class Editor {
     public Editor() {
         this.grid = LoadMaze("map_1");
         this.index = 0;
-        this.types = new TileType[3];
+        this.types = new TileType[4];
         this.types[0] = TileType.Room;
         this.types[1] = TileType.Wall;
+        this.types[2] = TileType.Exit;
         this.menuBackground = FastLoad("menu_background");
         setupUI();
         showHelp = false;
@@ -55,6 +56,7 @@ public class Editor {
         tilePickerMenu = editorUI.getMenu("TilePicker");
         tilePickerMenu.quickAdd("Room", "room");
         tilePickerMenu.quickAdd("Wall", "wall");
+        tilePickerMenu.quickAdd("Exit", "exit");
     }
 
     /**
@@ -70,6 +72,8 @@ public class Editor {
                     index = 0;
                 } else if (tilePickerMenu.isButtonClicked("Wall")) {
                     index = 1;
+                } else if (tilePickerMenu.isButtonClicked("Exit")) {
+                    index = 2;
                 } else
                     setTile();
             }

@@ -78,6 +78,9 @@ public class Map {
                 type = TileType.Wall;
                 break;
             case "2":
+                type = TileType.Exit;
+                break;
+            case "3":
                 type = TileType.NULL;
                 break;
         }
@@ -99,8 +102,11 @@ public class Map {
             case Wall:
                 ID = "1";
                 break;
-            case NULL:
+            case Exit:
                 ID = "2";
+                break;
+            case NULL:
+                ID = "3";
                 break;
         }
 

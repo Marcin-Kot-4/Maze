@@ -67,7 +67,7 @@ public class Maze {
         tileGrid.getTile(startingPoint[0], startingPoint[1]).setNumber(1);
 
         while (!queue.isEmpty()) {
-            if (Time.GetTime() - 10 < currentMapTimer) { // jeśli nie upłynęło 100ms
+            if (Time.GetTime() - 40 < currentMapTimer) { // jeśli nie upłynęło x ms
                 Time.Update();
                 update();
                 // Obsługa klawiatury
@@ -84,8 +84,7 @@ public class Maze {
                 currentMapTimer = Time.GetTime();
                 Tile current = queue.poll();
 
-                if (!current.isVisited() && current.getX() / TILE_SIZE != 0 && current.getX() / TILE_SIZE != 19 &&
-                        current.getY() / TILE_SIZE != 0 && current.getY() / TILE_SIZE != 14) {
+                if (!current.isVisited()) {
                     current.setVisited(true);
                     queue.addAll(current.getNeighbors(tileGrid));
                 }
@@ -129,7 +128,7 @@ public class Maze {
             tileGrid.getTile(tilesChecked).setPartOfPath(true); // ostatni kafelek (wyjście) jest częścią drogi do wyjścia
             int backTracing = tilesChecked;
             while (!backToStart) {
-                if (Time.GetTime() - 150 < currentMapTimer) { // jeśli nie upłynęło 150ms
+                if (Time.GetTime() - 100 < currentMapTimer) { // jeśli nie upłynęło 150ms
                     Time.Update();
                     update();
                     /** Zaktualizuj okno - wyświetl to co zostało narysowane. Odpytaj klawiaturę i myszkę. **/

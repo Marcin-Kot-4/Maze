@@ -145,14 +145,15 @@ public class Tile {
     public List<Tile> getNeighbors(TileGrid tileGrid) {
         int ix = (int)x/TILE_SIZE, iy = (int)y/TILE_SIZE;
 
-        if (tileGrid.getTile((int)ix - 1, (int)iy).getType() == TileType.Room) {
+        if (tileGrid.getTile((int)ix - 1, (int)iy).getType() == TileType.Room ||
+                tileGrid.getTile((int)ix - 1, (int)iy).getType() == TileType.Exit) {
             if (tileGrid.getTile((int)ix - 1, (int)iy).getNumber() == 0) {
                 Maze.tilesChecked++;
                 tileGrid.getTile((int)ix - 1, (int)iy).setNumber(Maze.tilesChecked);
             }
             this.neighbors.add(tileGrid.getTile((int)ix - 1, (int)iy));
             Maze.connections.add(new Connection(tileGrid.getTile((int)ix - 1, (int)iy).getNumber(), tileGrid.getTile((int)ix, (int)iy).getNumber()));
-            if (ix - 1 == 0){
+            if (tileGrid.getTile((int)ix - 1, (int)iy).getType() == TileType.Exit){
                 tileGrid.getTile((int)ix - 1, (int)iy).setVisited(true);
                 Maze.foundWayOut = true;
                 Maze.escapePoint[0] =  ix - 1;
@@ -160,14 +161,15 @@ public class Tile {
                 return neighbors;
             }
         }
-        if (tileGrid.getTile((int)ix + 1, (int)iy).getType() == TileType.Room) {
+        if (tileGrid.getTile((int)ix + 1, (int)iy).getType() == TileType.Room ||
+                tileGrid.getTile((int)ix + 1, (int)iy).getType() == TileType.Exit) {
             if (tileGrid.getTile((int)ix + 1, (int)iy).getNumber() == 0) {
                 Maze.tilesChecked++;
                 tileGrid.getTile((int)ix + 1, (int)iy).setNumber(Maze.tilesChecked);
             }
             this.neighbors.add(tileGrid.getTile((int)ix + 1, (int)iy));
             Maze.connections.add(new Connection(tileGrid.getTile((int)ix + 1, (int)iy).getNumber(), tileGrid.getTile((int)ix, (int)iy).getNumber()));
-            if (ix + 1 == 19){
+            if (tileGrid.getTile((int)ix + 1, (int)iy).getType() == TileType.Exit){
                 tileGrid.getTile((int)ix + 1, (int)iy).setVisited(true);
                 Maze.foundWayOut = true;
                 Maze.escapePoint[0] =  ix + 1;
@@ -175,14 +177,15 @@ public class Tile {
                 return neighbors;
             }
         }
-        if (tileGrid.getTile((int)ix, (int)iy - 1).getType() == TileType.Room) {
+        if (tileGrid.getTile((int)ix, (int)iy - 1).getType() == TileType.Room ||
+                tileGrid.getTile((int)ix, (int)iy - 1).getType() == TileType.Exit) {
             if (tileGrid.getTile((int)ix, (int)iy - 1).getNumber() == 0) {
                 Maze.tilesChecked++;
                 tileGrid.getTile((int)ix, (int)iy - 1).setNumber(Maze.tilesChecked);
             }
             this.neighbors.add(tileGrid.getTile((int)ix, (int)iy - 1));
             Maze.connections.add(new Connection(tileGrid.getTile((int)ix, (int)iy - 1).getNumber(), tileGrid.getTile((int)ix, (int)iy).getNumber()));
-            if (iy - 1 == 0){
+            if (tileGrid.getTile((int)ix, (int)iy - 1).getType() == TileType.Exit){
                 tileGrid.getTile((int)ix, (int)iy - 1).setVisited(true);
                 Maze.foundWayOut = true;
                 Maze.escapePoint[0] =  ix;
@@ -190,14 +193,15 @@ public class Tile {
                 return neighbors;
             }
         }
-        if (tileGrid.getTile((int)ix, (int)iy + 1).getType() == TileType.Room) {
+        if (tileGrid.getTile((int)ix, (int)iy + 1).getType() == TileType.Room ||
+                tileGrid.getTile((int)ix, (int)iy + 1).getType() == TileType.Exit) {
             if (tileGrid.getTile((int)ix, (int)iy + 1).getNumber() == 0) {
                 Maze.tilesChecked++;
                 tileGrid.getTile((int)ix, (int)iy + 1).setNumber(Maze.tilesChecked);
             }
             this.neighbors.add(tileGrid.getTile((int)ix, (int)iy + 1));
             Maze.connections.add(new Connection(tileGrid.getTile((int)ix, (int)iy + 1).getNumber(), tileGrid.getTile((int)ix, (int)iy).getNumber()));
-            if (iy + 1 == 14){
+            if (tileGrid.getTile((int)ix, (int)iy + 1).getType() == TileType.Exit){
                 tileGrid.getTile((int)ix, (int)iy + 1).setVisited(true);
                 Maze.foundWayOut = true;
                 Maze.escapePoint[0] = ix;

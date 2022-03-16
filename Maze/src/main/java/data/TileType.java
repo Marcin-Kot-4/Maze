@@ -7,6 +7,7 @@ public enum TileType {
 
     Room("room"),
     Wall("wall"),
+    Exit("exit"),
     NULL("wall");
 
     public String textureName;
