@@ -6,7 +6,7 @@ problem of finding a path in a maze.
 IDE: 
 - ***IntelliJ IDEA 2021.3***
 
-Library: 
+Libraries: 
 - **LWJGL** (Lightweight Java Game Library)
 - **Slick2D** (easy to use set of tools and utilites wrapped around LWJGL OpenGL bindings to make 2D Java game
 development easier)
@@ -14,7 +14,7 @@ development easier)
 ---
 
 ## In order to run this application you need to:
-- open this project in Intellij IDEA
+- open Maze/Maze directory as project in Intellij IDEA
 - before compiling class Start.java
   - right click on file lwjgl.jar (this file is in "External Libraries")
   - choose "Open Library Settings" *[F4]*
