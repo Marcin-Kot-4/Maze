@@ -1,5 +1,6 @@
 package user_interface;
 
+import controllers.Graphic;
 import org.newdawn.slick.opengl.Texture;
 
 import static controllers.Graphic.FastLoad;
@@ -45,8 +46,8 @@ public class Button {
         this.texture = FastLoad(textureName);
         this.x = x;
         this.y = y;
-        this.width = texture.getImageWidth();
-        this.height = texture.getImageHeight();
+        this.width = Graphic.TILE_SIZE;
+        this.height = Graphic.TILE_SIZE;
     }
 
     public String getName() {

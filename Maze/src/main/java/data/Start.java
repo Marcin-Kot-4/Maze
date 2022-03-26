@@ -23,7 +23,7 @@ public class Start {
             Display.update();
             /** Ustaw określoną liczbę klatek na sekundę. Gra jest usypiana na dodatkowy dowolny czas w przypadku
              *  kiedy liczba FPS miałaby przekroczyć liczbę podaną w argumencie metody **/
-            Display.sync(144);
+//            Display.sync(144);
         }
         Display.destroy();
     }

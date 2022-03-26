@@ -75,15 +75,16 @@ public class TileGrid {
         for (int i = 0; i < map.length; i++){
             for (int j = 0; j < map[i].length; j++){
                 map[i][j].draw();
-                if (map[i][j].isVisited() && !map[i][j].isPartOfPath()){
-                    DrawTexture(FastLoad("dott"), i * 64, j * 64, 64, 64); // jeśli ten kafelek był odwiedzony i nie jest elementem
+                if (map[i][j].isPartOfPath()){
+                    DrawTexture(FastLoad("dottPath"), i * TILE_SIZE, j * TILE_SIZE, TILE_SIZE, TILE_SIZE); // jeśli ten kafelek jest elementem najkrótszej drogi do wyjścia
+                    gameUI.drawString(i * TILE_SIZE, j * TILE_SIZE, "" + map[i][j].getNumber());          //  wówczas narysuj pomarańczową kropkę
+                    continue;
+                }
+                if (map[i][j].isVisited()){
+                    DrawTexture(FastLoad("dott"), i * TILE_SIZE, j * TILE_SIZE, TILE_SIZE, TILE_SIZE); // jeśli ten kafelek był odwiedzony i nie jest elementem
                                                                                                    // najkrótszej drogi do wyjścia wówczas narysuj żółtą kropkę
                     gameUI.draw();
-                    gameUI.drawString(i * 64, j * 64, "" + map[i][j].getNumber());
-                }
-                if (map[i][j].isPartOfPath()){
-                    DrawTexture(FastLoad("dottPath"), i * 64, j * 64, 64, 64); // jeśli ten kafelek jest elementem najkrótszej drogi do wyjścia
-                    gameUI.drawString(i * 64, j * 64, "" + map[i][j].getNumber());          //  wówczas narysuj pomarańczową kropkę
+                    gameUI.drawString(i * TILE_SIZE, j * TILE_SIZE, "" + map[i][j].getNumber());
                 }
             }
         }

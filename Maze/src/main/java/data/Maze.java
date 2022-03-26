@@ -67,7 +67,7 @@ public class Maze {
         tileGrid.getTile(startingPoint[0], startingPoint[1]).setNumber(1);
 
         while (!queue.isEmpty()) {
-            if (Time.GetTime() - 40 < currentMapTimer) { // jeśli nie upłynęło x ms
+            if (Time.GetTime() - 130 < currentMapTimer) { // jeśli nie upłynęło x ms
                 Time.Update();
                 update();
                 // Obsługa klawiatury
@@ -75,7 +75,7 @@ public class Maze {
                 Display.update();
                 /** Ustaw określoną liczbę klatek na sekundę. Gra jest usypiana na dodatkowy dowolny czas w przypadku
                  *  kiedy liczba FPS miałaby przekroczyć liczbę podaną w argumencie metody **/
-                Display.sync(144);
+//                Display.sync(240);
                 if (StateManager.appState == StateManager.AppState.MAINMENU) { // jeśli został naciśnięty ESC wówczas zakończ działanie funkcji
                     return;
                 }
@@ -112,30 +112,19 @@ public class Maze {
 
                 getX() / TILE_SIZE);
         System.out.println(tilesChecked);
-        if (tileGrid.getTile(tilesChecked).
-
-                getX() / TILE_SIZE == 0 || // jeśli znaleziony punkt to wyjście
-                tileGrid.getTile(tilesChecked).
-
-                        getX() / TILE_SIZE == 19 || // czyli jeśli istnieje wyjście z labiryntu
-                tileGrid.getTile(tilesChecked).
-
-                        getY() / TILE_SIZE == 0 ||
-                tileGrid.getTile(tilesChecked).
-
-                        getY() / TILE_SIZE == 14) {
+        if (tileGrid.getTile(tilesChecked).getType().textureName.equals("exit")) { // jeśli znaleziony punkt to wyjście
             boolean backToStart = false;
             tileGrid.getTile(tilesChecked).setPartOfPath(true); // ostatni kafelek (wyjście) jest częścią drogi do wyjścia
             int backTracing = tilesChecked;
             while (!backToStart) {
-                if (Time.GetTime() - 100 < currentMapTimer) { // jeśli nie upłynęło 150ms
+                if (Time.GetTime() - 150 < currentMapTimer) { // jeśli nie upłynęło 150ms
                     Time.Update();
                     update();
                     /** Zaktualizuj okno - wyświetl to co zostało narysowane. Odpytaj klawiaturę i myszkę. **/
                     Display.update();
                     /** Ustaw określoną liczbę klatek na sekundę. Gra jest usypiana na dodatkowy dowolny czas w przypadku
                      *  kiedy liczba FPS miałaby przekroczyć liczbę podaną w argumencie metody **/
-                    Display.sync(144);
+//                    Display.sync(144);
                     if (StateManager.appState == StateManager.AppState.MAINMENU) { // jeśli został naciśnięty ESC wówczas zakończ działanie funkcji
                         return;
                     }
@@ -186,7 +175,7 @@ public class Maze {
      * Metoda rysująca punkt startowy w labiryncie
      */
     private void drawStartingPoint() {
-        DrawTexture(FastLoad("monster"), startingPoint[0] * 64, startingPoint[1] * 64, 64, 64);
+        DrawTexture(FastLoad("monster"), startingPoint[0] * TILE_SIZE, startingPoint[1] * TILE_SIZE, TILE_SIZE, TILE_SIZE);
     }
 
     /**
@@ -201,9 +190,9 @@ public class Maze {
      */
     private void updateUI() {
         gameUI.draw();
-        gameUI.drawString(1284, 500, "Tiles checked: " + tilesChecked);
-        gameUI.drawString(1320, 870, "ESC - go to");
-        gameUI.drawString(1320, 890, "main menu");
+        gameUI.drawString((int)(1284 * SCALING), (int)(500 * SCALING), "Tiles checked: " + tilesChecked);
+        gameUI.drawString((int)(1320 * SCALING), (int)(870 * SCALING), "ESC - go to");
+        gameUI.drawString((int)(1320 * SCALING), (int)(890 * SCALING), "main menu");
     }
 
     /**
@@ -220,7 +209,7 @@ public class Maze {
 
         // Pasek po prawej stronie w grze. Załadowana tekstura jest rozmiaru 256x1024
         // a nie 192x960 ponieważ biblioteka slick ma problemy z teksturami, których rozmiary nie są potęgą dwójki.
-        DrawTexture(menuBackground, 1280, 0, 192, 960); // tło dla "Tiles checked: x"
+        DrawTexture(menuBackground, (int)(1280 * SCALING), 0, (int)(192 * SCALING), (int)(960 * SCALING)); // tło dla "Tiles checked: x"
         updateUI();
 
         while (Keyboard.next()) {

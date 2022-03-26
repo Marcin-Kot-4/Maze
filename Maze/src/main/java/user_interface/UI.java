@@ -27,9 +27,9 @@ public class UI {
     public UI() {
         buttonList = new ArrayList<Button>();
         menuList = new ArrayList<Menu>();
-        awtFont = new Font("Dubai", Font.BOLD, 24);
-        awtHeadingFont = new Font("Dubai", Font.BOLD, 51);
-        awtDescriptionFont = new Font("Dubai", Font.PLAIN, 16);
+        awtFont = new Font("Dubai", Font.BOLD, (int)(24 * SCALING));
+        awtHeadingFont = new Font("Dubai", Font.BOLD, (int)(51 * SCALING));
+        awtDescriptionFont = new Font("Dubai", Font.PLAIN, (int)(16 * SCALING));
         font = new TrueTypeFont(awtFont, true);
         font_heading = new TrueTypeFont(awtHeadingFont, true);
         font_description = new TrueTypeFont(awtDescriptionFont, true);
@@ -52,6 +52,15 @@ public class UI {
      */
     public void addButton(String name, String textureName, int x, int y) {
         buttonList.add(new Button(name, FastLoad(textureName), x, y));
+    }
+
+    /**
+     * Dodaje przycisk do listy przycisków obiektu o podanej nazwie przycisku, nazwie pliku, w podanym położeniu w oknie aplikacji.
+     * Robiąc to, tworzy nowy obiekt klasy Button, wykorzystując do tego konstruktor, który rozmiar przycisku pobiera z pliku graficznego.
+     * Rozbudowany o wymiary przycisku.
+     */
+    public void addButton(String name, String textureName, int x, int y, int width, int height) {
+        buttonList.add(new Button(name, FastLoad(textureName), x, y, width, height));
     }
 
     /**

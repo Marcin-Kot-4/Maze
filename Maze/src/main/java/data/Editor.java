@@ -52,7 +52,7 @@ public class Editor {
      */
     private void setupUI() {
         editorUI = new UI();
-        editorUI.createMenu("TilePicker", 1280, 16, 192, 960, 2, 0);
+        editorUI.createMenu("TilePicker", (int)(1280 * SCALING), (int)(16 * SCALING), (int)(192 * SCALING), (int)(960 * SCALING), 2, 0);
         tilePickerMenu = editorUI.getMenu("TilePicker");
         tilePickerMenu.quickAdd("Room", "room");
         tilePickerMenu.quickAdd("Wall", "wall");
@@ -97,7 +97,7 @@ public class Editor {
      * Rysuje tło wyboru kafelków, mapę, menu kafelków oraz pomoc.
      */
     private void draw() {
-        DrawTexture(menuBackground, 1280, 0, 192, 960); // załadowana tekstura jest rozmiaru 256x1024
+        DrawTexture(menuBackground, (int)(1280 * SCALING), 0, (int)(192 * SCALING), (int)(960 * SCALING)); // załadowana tekstura jest rozmiaru 256x1024
         grid.draw();
         editorUI.draw();
         if (showHelp){
@@ -115,8 +115,8 @@ public class Editor {
      * Przed próbą zmiany sprawdza, czy kursor myszy znajduje się nad planszą.
      */
     private void setTile() {
-        if (Mouse.getX() < 1280 && Mouse.getY() < 980){
-            grid.setTile((int) Math.floor((float) Mouse.getX() / 64), (int) Math.floor((float) (HEIGHT - Mouse.getY() - 1) / 64), types[index]);
+        if (Mouse.getX() < (int)(1280 * SCALING) && Mouse.getY() < (int)(960 * SCALING)){
+            grid.setTile((int) Math.floor((float) Mouse.getX() / TILE_SIZE), (int) Math.floor((float) (HEIGHT - Mouse.getY() - 1) / TILE_SIZE), types[index]);
         }
     }
 }
