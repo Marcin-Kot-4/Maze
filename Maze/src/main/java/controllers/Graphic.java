@@ -18,18 +18,9 @@ import static org.lwjgl.opengl.GL11.GL_MODELVIEW;
  * obiektów, rysuje teksturę czworokąta w podanych współrzędnych, zwraca obiekty klasy Texture.
  */
 public class Graphic {
-    // I 736/480
-    // II 1472/960
-    // III 2208/1440
-    public static float SCALING = 0.5f;
-//    public static float SCALING = 1.0f;
-//    public static float SCALING = 1.5f;
-    public static int WIDTH = 736, HEIGHT = 480;
-//    public static int WIDTH = 1472, HEIGHT = 960;
-//    public static int WIDTH = 2208, HEIGHT = 1440;
-    public static int TILE_SIZE = 32;
-//    public static int TILE_SIZE = 64;
-//    public static int TILE_SIZE = 96;
+    public static float SCALING = 1.0f;
+    public static int WIDTH = 1472, HEIGHT = 960;
+    public static int TILE_SIZE = 64;
 
     public static void StartSession(){
         /** Ustaw tytuł okna "Maze" */

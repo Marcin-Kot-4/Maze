@@ -8,10 +8,7 @@ import org.lwjgl.opengl.Display;
 import org.newdawn.slick.opengl.Texture;
 import user_interface.UI;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
-import java.util.Random;
+import java.util.*;
 
 import static controllers.Graphic.*;
 import static controllers.Map.LoadMaze;
@@ -30,6 +27,7 @@ public class Maze {
     public static boolean foundWayOut;
     public static int tilesChecked;
     public static List<Connection> connections;
+    public static String algorithm;
 
     /**
      * Konstruktor trybu gry.
@@ -49,8 +47,55 @@ public class Maze {
         foundWayOut = false;
         tilesChecked = 1;
         connections = new LinkedList<>();
-        breadthFirstSearch();
+        algorithm = "Depth";
+        depthFirstSearch();
         backtracking();
+    }
+
+    /**
+     * Metoda implementująca algorytm DepthFirstSearch. Zaczyna poszukiwanie od punktu startowego. Tam sprawdza, w
+     * którą stronę może się poruszać. Wszystkie dostępne ruchy na sąsiadujące kafelki umieszcza w kolejce.
+     * Następnie przemieszcza się do ostatniego kafelka z kolejki (przy okazji usuwa go z kolejki). Sprawdza, czy
+     * jest przy wyjściu, jeśli nie to sprawdza, w którą stronę może się poruszać. Wszystkie dostępne ruchy na
+     * sąsiadujące kafelki umieszcza w kolejce LIFO. Następnie przemieszcza się do kolejnego kafelka z kolejki (przy
+     * okazji usuwając go z niej) itd. aż znajdzie wyjście. Na koniec wypisuje współrzędne punktu wyjścia.
+     * W porównaniu do BFS używa kolejki LIFO zamiast FIFO, co sprawia, że algorytm próbuje odejść jak najdalej od
+     * punktu startowego. Priorytety kierunku: dół, góra, prawo, lewo.
+     */
+    public void depthFirstSearch() {
+        Deque<Tile> stack = new LinkedList<>();
+        stack.push(tileGrid.getTile(startingPoint[0], startingPoint[1])); // pushes at the head of this deque
+        tileGrid.getTile(startingPoint[0], startingPoint[1]).setNumber(1);
+
+        while (!stack.isEmpty()) {
+            if (Time.GetTime() - 130 < currentMapTimer) { // jeśli nie upłynęło x ms
+                Time.Update();
+                update();
+                // Obsługa klawiatury
+                /** Zaktualizuj okno - wyświetl to co zostało narysowane. Odpytaj klawiaturę i myszkę. **/
+                Display.update();
+                /** Ustaw określoną liczbę klatek na sekundę. Gra jest usypiana na dodatkowy dowolny czas w przypadku
+                 *  kiedy liczba FPS miałaby przekroczyć liczbę podaną w argumencie metody **/
+//                Display.sync(240);
+                if (StateManager.appState == StateManager.AppState.MAINMENU) { // jeśli został naciśnięty ESC wówczas zakończ działanie funkcji
+                    return;
+                }
+            } else {
+                Time.Update();
+                currentMapTimer = Time.GetTime();
+                Tile current = stack.pop();
+
+                if (!current.isVisited()){
+                    current.setVisited(true);
+                    current.getNeighbors(tileGrid).forEach(stack::push);
+                }
+
+                if (foundWayOut == true) {
+                    System.out.println("Found way out! x: " + escapePoint[0] + ", y: " + escapePoint[1]);
+                    break;
+                }
+            }
+        }
     }
 
     /**
@@ -60,10 +105,13 @@ public class Maze {
      * jest przy wyjściu, jeśli nie to sprawdza, w którą stronę może się poruszać. Wszystkie dostępne ruchy na
      * sąsiadujące kafelki umieszcza w kolejce FIFO. Następnie przemieszcza się do kolejnego kafelka z kolejki (przy
      * okazji usuwając go z niej) itd. aż znajdzie wyjście. Na koniec wypisuje współrzędne punktu wyjścia.
+     * W porównaniu do DFS używa kolejki FIFO zamiast LIFO, co sprawia, że algorytm przeszukuje najpierw kafelki, które
+     * są najbliżej punktu startowego, stopniowo oddalając się od niego. Nie obiera jednej konkretnej ścieżki.
+     * Priorytety kierunku: lewo, prawo, góra, dół.
      */
     public void breadthFirstSearch() {
         Queue<Tile> queue = new LinkedList<>();
-        queue.add(tileGrid.getTile(startingPoint[0], startingPoint[1]));
+        queue.add(tileGrid.getTile(startingPoint[0], startingPoint[1])); // adds element to the tail of queue
         tileGrid.getTile(startingPoint[0], startingPoint[1]).setNumber(1);
 
         while (!queue.isEmpty()) {
@@ -190,7 +238,13 @@ public class Maze {
      */
     private void updateUI() {
         gameUI.draw();
+
+        gameUI.drawString((int)(1315 * SCALING), (int)(50 * SCALING), "Algorithm: ");
+        gameUI.drawString((int)(1335 * SCALING), (int)(80 * SCALING), algorithm);
+        gameUI.drawString((int)(1310 * SCALING), (int)(100 * SCALING), "First Search");
         gameUI.drawString((int)(1284 * SCALING), (int)(500 * SCALING), "Tiles checked: " + tilesChecked);
+        gameUI.drawString((int)(1335 * SCALING), (int)(830 * SCALING), "B - BFS");
+        gameUI.drawString((int)(1335 * SCALING), (int)(850 * SCALING), "D - DFS");
         gameUI.drawString((int)(1320 * SCALING), (int)(870 * SCALING), "ESC - go to");
         gameUI.drawString((int)(1320 * SCALING), (int)(890 * SCALING), "main menu");
     }
@@ -216,6 +270,30 @@ public class Maze {
             if (Keyboard.getEventKey() == Keyboard.KEY_ESCAPE && Keyboard.getEventKeyState()) {
                 StateManager.setState(StateManager.AppState.MAINMENU);
                 StateManager.update();
+            }
+            if (Keyboard.getEventKey() == Keyboard.KEY_B && Keyboard.getEventKeyState()) {
+                this.tileGrid = LoadMaze("map_1");
+                this.menuBackground = FastLoad("menu_background");
+                setupUI();
+                currentMapTimer = Time.GetTime();
+                foundWayOut = false;
+                tilesChecked = 1;
+                connections = new LinkedList<>();
+                algorithm = "Breadth";
+                breadthFirstSearch();
+                backtracking();
+            }
+            if (Keyboard.getEventKey() == Keyboard.KEY_D && Keyboard.getEventKeyState()) {
+                this.tileGrid = LoadMaze("map_1");
+                this.menuBackground = FastLoad("menu_background");
+                setupUI();
+                currentMapTimer = Time.GetTime();
+                foundWayOut = false;
+                tilesChecked = 1;
+                connections = new LinkedList<>();
+                algorithm = "Depth";
+                depthFirstSearch();
+                backtracking();
             }
         }
     }

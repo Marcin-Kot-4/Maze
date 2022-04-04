@@ -112,10 +112,12 @@ public class MainMenu {
      * Metoda rysująca informacje o tym jak używać programu
      */
     public void drawINFO() {
-        menuUI.drawString(WIDTH / 3, (int) (HEIGHT * 0.30f), "Each tile on the edge of the map is an exit from the maze.");
-        menuUI.drawString(WIDTH / 3, (int) (HEIGHT * 0.35f), "You can edit maze in EDITOR.");
-        menuUI.drawString(WIDTH / 3, (int) (HEIGHT * 0.40f), "Each time you press FIND WAY the application randomizes starting point.");
-        menuUI.drawString(WIDTH / 3, (int) (HEIGHT * 0.45f), "The starting point cannot be the wall or edge of the map.");
+        menuUI.drawString(WIDTH / 3, (int) (HEIGHT * 0.30f), "Each time you press FIND WAY the application randomizes starting point.");
+        menuUI.drawString(WIDTH / 3, (int) (HEIGHT * 0.35f), "The starting point cannot be the wall or edge of the map.");
+        menuUI.drawString(WIDTH / 3, (int) (HEIGHT * 0.40f), "Tile with the \"Exit\" on it is an exit from the maze.");
+        menuUI.drawString(WIDTH / 3, (int) (HEIGHT * 0.45f), "You can edit maze in EDITOR.");
+        menuUI.drawString(WIDTH / 3, (int) (HEIGHT * 0.50f), "You can change the size of the application window in RESOLUTION.");
+        menuUI.drawString(WIDTH / 3, (int) (HEIGHT * 0.55f), "Authors: Patrycja Kalita, Marcin Kot. 2022");
     }
 
     /**
