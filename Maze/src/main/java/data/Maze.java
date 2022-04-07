@@ -151,8 +151,8 @@ public class Maze {
 
     /**
      * Algorytm wraca od punktu wyjścia do punktu startowego po kafelkach, które zostały ponumerowane przy okazji
-     * szukania wyjścia z labiryntu. Algorytm kieruje się parami klucz wartość. Każdy kafelek jako wartość przyjmuje
-     * numer kafelka, z którym bezpośrednio sąsiaduje. W drodze powrotnej wybierane są te sąsiadujące kafelki, które
+     * szukania wyjścia z labiryntu. Algorytm kieruje się parami klucz wartość. Każdy kafelek posiada listę z numerami
+     * kafelków bezpośrednio sąsiadujących. W drodze powrotnej wybierane są te sąsiadujące kafelki, które
      * mają najmniejszą liczbę w polu wartość.
      */
     public void backtracking() {

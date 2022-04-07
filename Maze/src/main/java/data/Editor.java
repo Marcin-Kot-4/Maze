@@ -101,10 +101,11 @@ public class Editor {
         grid.draw();
         editorUI.draw();
         if (showHelp){
-            DrawTexture(menuBackground, 380, 100, 635, 140);
+            DrawTexture(menuBackground, 380, 100, 635, 180);
             editorUI.drawString(410, 110, "Press 'S' to save edited map.");
-            editorUI.drawString(410, 150, "Each tile on the edge of the map is an exit from the maze.");
-            editorUI.drawString(410, 190, "Press 'ESC' to exit the editor.");
+            editorUI.drawString(410, 150, "Green tile is a wall, brown tile is a road.");
+            editorUI.drawString(410, 190, "At least one EXIT needed.");
+            editorUI.drawString(410, 230, "Press 'ESC' to exit the editor.");
         }
         editorUI.drawString(1310, 870, "S - SAVE");
         editorUI.drawString(1310, 900, "F1 - HELP");
