@@ -14,7 +14,7 @@ import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL11.GL_MODELVIEW;
 
 /**
- * Klasa Graphic m.in. ustawia tytuł okna „Tower Defense”, sprawdza, czy wystąpiła kolizja dwóch
+ * Klasa Graphic m.in. ustawia tytuł okna „Maze”, sprawdza, czy wystąpiła kolizja dwóch
  * obiektów, rysuje teksturę czworokąta w podanych współrzędnych, zwraca obiekty klasy Texture.
  */
 public class Graphic {
